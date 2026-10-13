@@ -4,13 +4,14 @@
   // Exclude these pages and their child paths, regardless of query or fragment.
   // Add further exclusions as {origin, path} entries.
   const exclusions = [
-    {origin: 'https://password.inflab.tuwien.ac.at', path: '/pwcs/input-password'}
+    { origin: 'https://password.inflab.tuwien.ac.at', path: '/pwcs/input-password' },
+    { origin: 'https://shop.tusoftware.tuwien.ac.at', path: '' },
   ];
   function allowed(url) {
     try {
       const u = new URL(url);
-      if (exclusions.some(({origin, path}) => u.origin === origin &&
-          (u.pathname === path || u.pathname.startsWith(path + '/')))) return false;
+      if (exclusions.some(({ origin, path }) => u.origin === origin &&
+        (u.pathname === path || u.pathname.startsWith(path + '/')))) return false;
       return u.protocol === 'https:' && !u.username && !u.password &&
         ['tuwien.at', 'tuwien.ac.at'].some(d => u.hostname === d || u.hostname.endsWith('.' + d));
     } catch { return false; }
@@ -40,17 +41,17 @@
     }
     if (!['SHA-1', 'SHA-256', 'SHA-512'].includes(algorithm) || ![6, 8].includes(digits) || !Number.isInteger(period) || period < 15 || period > 120) throw new Error('Unsupported TOTP parameters.');
     secretBytes(secret);
-    return {secret, algorithm, digits, period};
+    return { secret, algorithm, digits, period };
   }
   async function totp(config, now = Date.now()) {
     const counter = BigInt(Math.floor(now / 1000 / config.period));
     const message = new Uint8Array(8);
     new DataView(message.buffer).setBigUint64(0, counter);
-    const key = await crypto.subtle.importKey('raw', secretBytes(config.secret), {name: 'HMAC', hash: config.algorithm}, false, ['sign']);
+    const key = await crypto.subtle.importKey('raw', secretBytes(config.secret), { name: 'HMAC', hash: config.algorithm }, false, ['sign']);
     const mac = new Uint8Array(await crypto.subtle.sign('HMAC', key, message));
     const offset = mac[mac.length - 1] & 15;
     const value = new DataView(mac.buffer).getUint32(offset) & 0x7fffffff;
     return String(value % (10 ** config.digits)).padStart(config.digits, '0');
   }
-  root.TULogin = {allowed, secretBytes, parseSecret, totp};
+  root.TULogin = { allowed, secretBytes, parseSecret, totp };
 })(globalThis);
