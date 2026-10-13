@@ -13,6 +13,19 @@ test('exact TU Wien HTTPS domain boundaries', () => {
   for (const url of ['https://tuwien.at/', 'https://tuwien.ac.at/', 'https://idp.zid.tuwien.ac.at/login', 'https://a.b.tuwien.at/']) assert.equal(core.allowed(url), true);
   for (const url of ['http://tuwien.at/', 'https://eviltuwien.at/', 'https://tuwien.at.evil.example/', 'https://user:pass@tuwien.at/', 'javascript:alert(1)', 'bad']) assert.equal(core.allowed(url), false);
 });
+test('excluded password page and variants reject autofill and credential requests', async () => {
+  const {TULogin: core} = context();
+  const b = background();
+  const page = 'https://password.inflab.tuwien.ac.at/pwcs/input-password';
+  for (const suffix of ['', '/', '?next=login', '#form', '/step']) {
+    const url = page + suffix;
+    assert.equal(core.allowed(url), false);
+    assert.equal(await b.request('credentials', {}, {...b.sender, url}), null);
+    assert.equal(await b.request('credentials', {action: url}), null);
+  }
+  assert.equal(core.allowed('https://password.inflab.tuwien.ac.at/pwcs/login'), true);
+  assert.equal(core.allowed(page + '-other'), true);
+});
 test('RFC 6238 SHA-1, SHA-256 and SHA-512 reference vectors', async () => {
   const {TULogin: core} = context();
   const encode = text => {

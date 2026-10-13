@@ -16,7 +16,7 @@
     el.dispatchEvent(new Event('change', {bubbles: true}));
   }
   async function scan() {
-    if (busy) return;
+    if (busy || !TULogin.allowed(location.href)) return;
     busy = true;
     try {
       const {settings} = await browser.storage.local.get('settings');
@@ -44,6 +44,7 @@
         if (reply?.wait) { setTimeout(scan, reply.wait); return; }
         if (!reply || reply.error) continue;
         if (reply.validUntil && reply.validUntil - Date.now() <= 5000) { setTimeout(scan, Math.max(200, reply.validUntil - Date.now() + 200)); return; }
+        if (!TULogin.allowed(location.href)) return;
         fill(user, reply.username); fill(pass, reply.password); fill(otp, reply.code);
         const state = {url: location.href, user, pass, otp, username: user?.value, password: pass?.value, code: otp?.value, validUntil: reply.validUntil, submitted: false};
         completed.set(form, state);

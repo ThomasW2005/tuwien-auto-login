@@ -1,9 +1,16 @@
 /* Shared validation and RFC 6238 TOTP. No third-party code or network requests. */
 (function (root) {
   'use strict';
+  // Exclude these pages and their child paths, regardless of query or fragment.
+  // Add further exclusions as {origin, path} entries.
+  const exclusions = [
+    {origin: 'https://password.inflab.tuwien.ac.at', path: '/pwcs/input-password'}
+  ];
   function allowed(url) {
     try {
       const u = new URL(url);
+      if (exclusions.some(({origin, path}) => u.origin === origin &&
+          (u.pathname === path || u.pathname.startsWith(path + '/')))) return false;
       return u.protocol === 'https:' && !u.username && !u.password &&
         ['tuwien.at', 'tuwien.ac.at'].some(d => u.hostname === d || u.hostname.endsWith('.' + d));
     } catch { return false; }
