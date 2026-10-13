@@ -42,6 +42,7 @@ Keep the extension installed to retain its settings. The current manifest uses I
 
 ## Credential storage and behavior
 
+See the [privacy policy](PRIVACY.md) for data handling and deletion details. German submission text for Chrome Web Store privacy fields is available in [CHROME_WEB_STORE.md](CHROME_WEB_STORE.md).
 Credentials and the authenticator secret are saved in `browser.storage.local` in your browser profile, **without encryption**. The extension does not transmit them to external servers; it writes them into allowed login forms, which submit to TU Wien. Anyone who can read your profile can retrieve both factors. Storing both factors together reduces MFA's protection. This storage choice enables unattended login across browser restarts; there is no master-password prompt. See [Mozilla's storage documentation](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage).
 
 - Only exact TU Wien domains and their subdomains over HTTPS are allowed. Names like `eviltuwien.at` and `tuwien.at.example.com` are excluded.
