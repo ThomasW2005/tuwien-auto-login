@@ -1,58 +1,39 @@
 {
-  "manifest_version": 3,
-  "name": "TUWien-MFA-Autofill",
-  "version": "1.1.2",
-  "description": "Automatically fill and submit TU Wien login and TOTP forms.",
-  "permissions": [
-    "storage"
-  ],
-  "background": {
-    "scripts": [
-      "compat.js",
-      "core.js",
-      "background.js"
-    ],
-    "service_worker": "service-worker.js"
-  },
-  "content_scripts": [
-    {
-      "matches": [
-        "https://*.tuwien.ac.at/*",
-        "https://*.tuwien.at/*"
-      ],
-      "js": [
-        "compat.js",
-        "core.js",
-        "content.js"
-      ],
-      "run_at": "document_idle"
-    }
-  ],
-  "options_ui": {
-    "page": "options.html",
-    "open_in_tab": true
-  },
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "TUWien-MFA-Autofill-Firefox@ThomasW2005.github.io",
-      "update_url": "https://thomasw2005.github.io/TUWien-MFA-Autofill-Firefox/updates.json",
-      "strict_min_version": "140.0",
-      "data_collection_permissions": {
-        "required": [
-          "none"
-        ]
-      }
+    "manifest_version": 3,
+    "name": "TUWien Autologin",
+    "version": "1.1.3",
+    "description": "Automatically fill and submit TU Wien login and TOTP forms.",
+    "permissions": ["storage"],
+    "background": {
+        "scripts": ["compat.js", "core.js", "background.js"],
+        "service_worker": "service-worker.js"
     },
-    "gecko_android": {
-      "strict_min_version": "140.0"
+    "content_scripts": [
+        {
+            "matches": ["https://*.tuwien.ac.at/*", "https://*.tuwien.at/*"],
+            "js": ["compat.js", "core.js", "content.js"],
+            "run_at": "document_idle"
+        }
+    ],
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": true
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "tuwien-auto-login@local.extension",
+            "strict_min_version": "140.0",
+            "data_collection_permissions": {
+                "required": ["none"]
+            }
+        },
+        "gecko_android": {
+            "strict_min_version": "140.0"
+        }
+    },
+    "minimum_chrome_version": "121",
+    "host_permissions": ["https://*.tuwien.ac.at/*", "https://*.tuwien.at/*"],
+    "action": {
+        "default_title": "TUWien-Autologin settings"
     }
-  },
-  "minimum_chrome_version": "121",
-  "host_permissions": [
-    "https://*.tuwien.ac.at/*",
-    "https://*.tuwien.at/*"
-  ],
-  "action": {
-    "default_title": "TUWien-MFA-Autofill settings"
-  }
 }
