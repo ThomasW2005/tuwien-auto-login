@@ -1,44 +1,32 @@
-# TUWien Autologin
-
-Automatically fills and submits TU Wien login forms, including authenticator codes. Works on desktop Firefox 140+, Firefox for Android 140+, and desktop Chrome 121+.
-
-Firefox: [Firefox Add-ons (AMO)](https://addons.mozilla.org/de/firefox/addon/tu-wien-automatic-login/).  
-Chrome: [GitHub Releases](https://github.com/ThomasW2005/tuwien-auto-login/releases/latest).
-
 > [!CAUTION]
 > Das ist alles komplett gevibecoded haha
 
+# TU Wien Autologin
+
+Automatically fills and submits TU Wien login forms, including authenticator codes. Works on desktop Firefox 140+, Firefox for Android 140+, and desktop Chrome 121+.
+
 ## Install: Firefox on a computer / Android
 
-Open [the Addon Store page](https://addons.mozilla.org/de/firefox/addon/tu-wien-automatic-login/) and install the extension.
-
-## Install: Chrome on a computer
-
-1. Download the file ending in **`-chrome.zip`** from [the latest release](https://github.com/ThomasW2005/TUWien-MFA-Autofill-Firefox/releases/latest) and extract it.
-2. Open **`chrome://extensions`** and turn on **Developer mode**.
-3. Click **Load unpacked** and select the extracted folder containing `manifest.json`.
-
-Keep that folder on your computer. Do not select the ZIP itself or GitHub's “Source code” downloads. These steps follow [Chrome's installation guide](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked).
+[Firefox](https://addons.mozilla.org/de/firefox/addon/tu-wien-automatic-login/)
+[Chrome](https://chromewebstore.google.com/detail/tuwien-autologin/fhomdefnmbhmekhhfoboenbcmnljibpf)
 
 ## Set up after installing
 
-1. Open **TUWien Autologin** from your browser's extensions menu.
+1. Open **TU Wien Autologin** from your browser's extensions menu.
 2. Enter your TU Wien username/email and password.
 3. Paste your authenticator's **setup secret** or `otpauth://totp/...` URI. This is the secret from your MFA setup QR code, not the changing six-digit code. Leave it empty for password-only login.
 4. If shown, click **Allow access to TU Wien websites** and approve.
-5. Enable **automatic login**, click **Save settings**, and visit your usual TU Wien service, such as TISS.
+5. Enable **automatic login**, click **Save settings**.
 
 Configure each browser/device separately. Settings are not synced. Leave custom selectors empty unless automatic detection fails. Keep your device clock synchronized.
 
 A blank secret field preserves a previously saved secret. To remove it, select **Remove saved authenticator secret** and save. Push approval, SMS, CAPTCHA, passkeys and hardware security keys cannot be automated.
 
-## Updates
+## ToDo / future improvements
 
-**Firefox:** Versions installed from AMO receive updates through AMO automatically when add-on automatic updates are enabled. Checks normally run about once every 24 hours; restarting Firefox does not guarantee an immediate update. On desktop, check now with **`about:addons` → gear icon → Check for Updates**. The installed version appears on the extension's settings page. See [Mozilla's update guide](https://extensionworkshop.com/documentation/manage/updating-your-extension/).
-
-**Chrome:** Download and extract the new Chrome ZIP into the same folder you originally loaded, replacing its files. Then click **Reload** for the extension at `chrome://extensions` and refresh TU Wien tabs. Unpacked Chrome extensions do not update through AMO.
-
-Keep the extension installed to retain its settings. The current manifest uses ID `tuwien-auto-login@local.extension`. Previously distributed packages using `TUWien-MFA-Autofill-Firefox@ThomasW2005.github.io` are a separate extension: they cannot automatically update to this ID or transfer their saved settings. Users moving between these IDs must install the new extension, configure it again, and disable or remove the old one to avoid duplicate login attempts.
+- [ ] Support for Active Directory login
+- [ ] Custom White/blacklist for sites
+- [ ] Convert Config website to Popup under Extension, add Quick Disable switch
 
 ## Credential storage and behavior
 

@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
-    "name": "TUWien Autologin",
-    "version": "1.1.5",
+    "name": "TU Wien Autologin",
+    "version": "1.1.6",
     "description": "Automatically fill and submit TU Wien login and TOTP forms.",
     "permissions": ["storage"],
     "background": {
@@ -34,6 +34,6 @@
     "minimum_chrome_version": "121",
     "host_permissions": ["https://*.tuwien.ac.at/*", "https://*.tuwien.at/*"],
     "action": {
-        "default_title": "TUWien-Autologin settings"
+        "default_title": "TU Wien Autologin settings"
     }
 }
